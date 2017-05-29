@@ -5,7 +5,14 @@ var app = express();
 var port = process.env.PORT;
 
 app.get("/", function(req, res) {
-  res.send(req.headers)
+  var ipaddress = req.headers["x-forwarded-for"];
+  var language = req.headers["accept-language"].split(",")[0];
+  var software = req.headers["user-agent"].split("(")[1].split(")")[0];
+  res.send(JSON.stringify({
+    "ipaddress": ipaddress,
+    "language": language,
+    "software": software
+  }));
 });
 
 
